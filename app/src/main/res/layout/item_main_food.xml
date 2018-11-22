@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:paddingLeft="15dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp">
+
+    <ImageView
+        android:id="@+id/ivFood"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="centerCrop"
+        tools:src="@mipmap/food0" />
+
+    <TextView
+        android:id="@+id/tvFoodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/ivFood"
+        android:textColor="@color/black_191919"
+        android:textSize="14sp"
+        tools:text="食品名称" />
+
+    <TextView
+        android:id="@+id/tvFoodScale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFoodName"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/ivFood"
+        android:textColor="@color/gray_969696"
+        android:textSize="12sp"
+        tools:text="月售: 21" />
+
+
+    <TextView
+        android:id="@+id/tvFoodPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvFoodScale"
+        android:layout_marginTop="10dp"
+        android:layout_toRightOf="@+id/ivFood"
+        android:textColor="@color/tomato"
+        android:textSize="12sp"
+        tools:text="61.1" />
+
+    <com.zhangxin.study.AddWidget
+        android:id="@+id/addWidget"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_alignBottom="@+id/ivFood"
+        android:layout_alignParentRight="true"/>
+</RelativeLayout>
