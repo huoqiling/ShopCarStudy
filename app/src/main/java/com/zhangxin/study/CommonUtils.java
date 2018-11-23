@@ -125,8 +125,8 @@ public class CommonUtils {
         toView.getLocationInWindow(toLoc);
 
         Path path = new Path();
-        path.moveTo(fromLoc[0], fromLoc[1]);
-        path.quadTo(toLoc[0], fromLoc[1]+300, toLoc[0], toLoc[1]);
+        path.moveTo(fromLoc[0], fromLoc[1]-50);
+        path.quadTo(toLoc[0], fromLoc[1]-200, toLoc[0], toLoc[1]);
 
         final TextView textView = new TextView(context);
         textView.setBackgroundResource(R.drawable.circle_blue);
@@ -134,9 +134,9 @@ public class CommonUtils {
         textView.setTextSize(10f);
         textView.setTextColor(Color.WHITE);
         textView.setGravity(Gravity.CENTER);
-        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams((int)(fromView.getWidth()*0.7), (int)(fromView.getHeight()*0.7));
+        CoordinatorLayout.LayoutParams lp = new CoordinatorLayout.LayoutParams((int)(fromView.getWidth()*0.6), (int)(fromView.getHeight()*0.6));
         rootView.addView(textView, lp);
-        ViewAnimator.animate(textView).path(path).accelerate().duration(500).onStop(new AnimationListener.Stop() {
+        ViewAnimator.animate(textView).path(path).accelerate().duration(700).onStop(new AnimationListener.Stop() {
             @Override
             public void onStop() {
                 rootView.removeView(textView);

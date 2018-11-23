@@ -1,9 +1,11 @@
 package com.zhangxin.study;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -74,9 +76,14 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.rootView)
     CoordinatorLayout rootView;
 
+    @BindView(R.id.collapsingToolbar)
+    CollapsingToolbarLayout collapsingToolbar;
+
     private BottomSheetBehavior behavior;
     private MainFoodAdapter foodAdapter;
     private FoodPopAdapter popAdapter;
+    public int expendedTag = 2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +100,28 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("底部弹出Behavior");
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        collapsingToolbar.setTitle("CollapsingToolbar");
+        collapsingToolbar.setExpandedTitleColor(Color.WHITE);
+        collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
+        appBar.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
+            @Override
+            //verticalOffset是当前appbarLayout的高度与最开始appbarlayout高度的差，向上滑动的话是负数
+            public void onOffsetChanged(AppBarLayout appBarLayout, int verticalOffset) {
+                //通过日志得出活动启动是两次，由于之前有setExpanded所以三次
+                Log.d("启动活动调用监听次数", "几次");
+                if (getSupportActionBar().getHeight() - appBarLayout.getHeight() == verticalOffset) {
+                    //折叠监听
+                    collapsingToolbar.setTitleEnabled(false);
+                }
+                if (expendedTag == 2 && verticalOffset == 0) {
+                    //展开监听
+                    collapsingToolbar.setTitleEnabled(true);
+                }
+                if (expendedTag != 2 && verticalOffset == 0) {
+                    expendedTag++;
+                }
+            }
+        });
     }
 
     private void initBehavior() {
@@ -139,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void add(View view, FoodBean foodBean) {
                 calculateCar(foodBean);
-                CommonUtils.addFoodToCarAnim(view,ivShopCar,MainActivity.this,rootView);
+                CommonUtils.addFoodToCarAnim(view, ivShopCar, MainActivity.this, rootView);
             }
 
             @Override
@@ -238,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    @OnClick({R.id.flCar, R.id.blackView,R.id.btnClear})
+    @OnClick({R.id.flCar, R.id.blackView, R.id.btnClear})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.flCar:
@@ -262,16 +291,16 @@ public class MainActivity extends AppCompatActivity {
                     public void clearCar() {
                         updateAmount(new BigDecimal(0));
                         tvCarBadge.setVisibility(View.GONE);
-                        for(int i=0;i<foodAdapter.getData().size();i++){
+                        for (int i = 0; i < foodAdapter.getData().size(); i++) {
                             FoodBean foodBean = foodAdapter.getItem(i);
                             foodBean.setSelectCount(0);
-                            foodAdapter.setData(i,foodBean);
+                            foodAdapter.setData(i, foodBean);
                         }
                         popAdapter.getData().clear();
                         popAdapter.notifyDataSetChanged();
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
                     }
-                }).show(getSupportFragmentManager(),"clearDialog");
+                }).show(getSupportFragmentManager(), "clearDialog");
                 break;
         }
     }

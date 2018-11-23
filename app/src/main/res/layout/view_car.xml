@@ -81,6 +81,8 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="52dp"
         android:layout_marginTop="5dp"
+        android:minWidth="15dp"
+        android:minHeight="15dp"
         android:background="@drawable/badge_bg"
         android:gravity="center"
         android:textColor="@color/white"
