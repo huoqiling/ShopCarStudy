@@ -1,16 +1,17 @@
-package com.zhangxin.study;
+package com.zhangxin.study.activity;
 
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -18,15 +19,32 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.flyco.tablayout.CommonTabLayout;
+import com.flyco.tablayout.listener.CustomTabEntity;
+import com.flyco.tablayout.listener.OnTabSelectListener;
+import com.zhangxin.study.R;
+import com.zhangxin.study.adapter.PopCarAdapter;
+import com.zhangxin.study.base.BaseActivity;
+import com.zhangxin.study.base.BaseEvent;
+import com.zhangxin.study.bean.FoodBean;
+import com.zhangxin.study.event.FoodEvent;
+import com.zhangxin.study.fragment.EvaluateFragment;
+import com.zhangxin.study.fragment.FoodFragment;
+import com.zhangxin.study.utils.CommonUtils;
+import com.zhangxin.study.view.AddWidget;
+import com.zhangxin.study.view.ClearDialog;
+import com.zhangxin.study.view.MaxHeightRecyclerView;
+import com.zhangxin.study.view.ShopCarView;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
 
     @BindView(R.id.toolbar)
@@ -46,9 +64,6 @@ public class MainActivity extends AppCompatActivity {
 
     @BindView(R.id.appBar)
     AppBarLayout appBar;
-
-    @BindView(R.id.recyclerView)
-    RecyclerView recyclerView;
 
     @BindView(R.id.tvCarNonSelect)
     TextView tvCarNonSelect;
@@ -79,21 +94,36 @@ public class MainActivity extends AppCompatActivity {
     @BindView(R.id.collapsingToolbar)
     CollapsingToolbarLayout collapsingToolbar;
 
-    private BottomSheetBehavior behavior;
-    private MainFoodAdapter foodAdapter;
-    private FoodPopAdapter popAdapter;
-    public int expendedTag = 2;
+    @BindView(R.id.tabLayout)
+    CommonTabLayout tabLayout;
 
+    @BindView(R.id.viewPager)
+    ViewPager viewPager;
+
+    private BottomSheetBehavior behavior;
+    private PopCarAdapter popAdapter;
+    private int expendedTag = 2;
+    private List<Fragment> fragmentList = new ArrayList<>();
+    private String[] titleList = new String[]{"商品", "评价"};
+    private ArrayList<CustomTabEntity> mTabEntities = new ArrayList<>();
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+    protected int getLayoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         initToolbar();
         initBehavior();
+        initViewPager();
         initPopRecyclerView();
-        initMainRecyclerView();
+
+    }
+
+    @Override
+    protected boolean useEventBus() {
+        return true;
     }
 
     private void initToolbar() {
@@ -124,6 +154,62 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    private void initViewPager() {
+        fragmentList.add(new FoodFragment());
+        fragmentList.add(new EvaluateFragment());
+        MyViewPagerAdapter pagerAdapter = new MyViewPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOffscreenPageLimit(fragmentList.size());
+        for (final String title : titleList) {
+            mTabEntities.add(new CustomTabEntity() {
+                @Override
+                public String getTabTitle() {
+                    return title;
+                }
+
+                @Override
+                public int getTabSelectedIcon() {
+                    return 0;
+                }
+
+                @Override
+                public int getTabUnselectedIcon() {
+                    return 0;
+                }
+            });
+        }
+        tabLayout.setTabData(mTabEntities);
+        tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
+            @Override
+            public void onTabSelect(int position) {
+                viewPager.setCurrentItem(position, false);
+            }
+
+            @Override
+            public void onTabReselect(int position) {
+
+            }
+        });
+
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                tabLayout.setCurrentTab(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+    }
+
     private void initBehavior() {
         behavior = BottomSheetBehavior.from(popContainer);
         behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
@@ -145,53 +231,35 @@ public class MainActivity extends AppCompatActivity {
 
     private void initPopRecyclerView() {
         popRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        popAdapter = new FoodPopAdapter(new AddWidget.OnAddClickListener() {
+        popAdapter = new PopCarAdapter(new AddWidget.OnAddClickListener() {
             @Override
             public void add(View view, FoodBean foodBean) {
-                updateMainSelectFoodCount(foodBean);
+                postEvent("foodFragment", new FoodEvent(view, foodBean));
                 calculateCar(foodBean);
             }
 
             @Override
             public void sub(FoodBean foodBean) {
-                updateMainSelectFoodCount(foodBean);
+                postEvent("foodFragment", new FoodEvent(null, foodBean));
                 calculateCar(foodBean);
             }
         });
         popRecyclerView.setAdapter(popAdapter);
     }
 
-    private void initMainRecyclerView() {
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setNestedScrollingEnabled(false);
-        foodAdapter = new MainFoodAdapter(new AddWidget.OnAddClickListener() {
-            @Override
-            public void add(View view, FoodBean foodBean) {
-                calculateCar(foodBean);
-                CommonUtils.addFoodToCarAnim(view, ivShopCar, MainActivity.this, rootView);
-            }
 
-            @Override
-            public void sub(FoodBean foodBean) {
-                calculateCar(foodBean);
-            }
-        });
-        recyclerView.setAdapter(foodAdapter);
-        foodAdapter.setNewData(CommonUtils.getFoodBeanList(this));
-    }
+    @Override
+    public void onEventMainThread(BaseEvent event) {
+        super.onEventMainThread(event);
+        if (event.getEventName().equals("addFood")) {
+            FoodEvent foodEvent = (FoodEvent) event.getObject();
+            calculateCar(foodEvent.getFoodBean());
+            CommonUtils.addFoodToCarAnim(foodEvent.getView(), ivShopCar, MainActivity.this, rootView);
+        }
 
-    /**
-     * 更改主页商品的选中数量
-     *
-     * @param foodBean
-     */
-    private void updateMainSelectFoodCount(FoodBean foodBean) {
-        for (int i = 0; i < foodAdapter.getData().size(); i++) {
-            FoodBean fb = foodAdapter.getItem(i);
-            if (fb.getId().equals(foodBean.getId())) {
-                fb.setSelectCount(foodBean.getSelectCount());
-                foodAdapter.setData(i, fb);
-            }
+        if (event.getEventName().equals("subFood")) {
+            FoodEvent foodEvent = (FoodEvent) event.getObject();
+            calculateCar(foodEvent.getFoodBean());
         }
     }
 
@@ -291,11 +359,7 @@ public class MainActivity extends AppCompatActivity {
                     public void clearCar() {
                         updateAmount(new BigDecimal(0));
                         tvCarBadge.setVisibility(View.GONE);
-                        for (int i = 0; i < foodAdapter.getData().size(); i++) {
-                            FoodBean foodBean = foodAdapter.getItem(i);
-                            foodBean.setSelectCount(0);
-                            foodAdapter.setData(i, foodBean);
-                        }
+                        postEvent("clearSelect");
                         popAdapter.getData().clear();
                         popAdapter.notifyDataSetChanged();
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
@@ -305,8 +369,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void showToast(String toastMsg) {
-        Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
-    }
+    private class MyViewPagerAdapter extends FragmentPagerAdapter {
 
+
+        public MyViewPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment fragment = fragmentList.get(position);
+            return fragment;
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+
+    }
 }

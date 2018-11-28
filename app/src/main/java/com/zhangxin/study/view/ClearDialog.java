@@ -1,10 +1,13 @@
-package com.zhangxin.study;
+package com.zhangxin.study.view;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.zhangxin.study.R;
+import com.zhangxin.study.base.BaseDialogFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

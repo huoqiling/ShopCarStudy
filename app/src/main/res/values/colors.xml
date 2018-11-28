@@ -12,4 +12,6 @@
     <color name="gray_a8a8a8">#a8a8a8</color>
     <color name="gray_535353">#535353</color>
     <color name="transparent">#00000000</color>
+    <color name="blue_00a6f1">#00a6f1</color>
+    <color name="black_323233">#323233</color>
 </resources>

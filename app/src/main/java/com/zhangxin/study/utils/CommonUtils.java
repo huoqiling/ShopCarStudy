@@ -1,4 +1,4 @@
-package com.zhangxin.study;
+package com.zhangxin.study.utils;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.zhangxin.study.R;
+import com.zhangxin.study.bean.FoodBean;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -126,7 +128,7 @@ public class CommonUtils {
 
         Path path = new Path();
         path.moveTo(fromLoc[0], fromLoc[1]-50);
-        path.quadTo(toLoc[0], fromLoc[1]-200, toLoc[0], toLoc[1]);
+        path.quadTo(toLoc[0], fromLoc[1]-200, toLoc[0]+80, toLoc[1]);
 
         final TextView textView = new TextView(context);
         textView.setBackgroundResource(R.drawable.circle_blue);

@@ -51,7 +51,7 @@
             android:textSize="12sp" />
     </LinearLayout>
 
-    <com.zhangxin.study.MaxHeightRecyclerView
+    <com.zhangxin.study.view.MaxHeightRecyclerView
         android:id="@+id/popRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -1,4 +1,4 @@
-package com.zhangxin.study;
+package com.zhangxin.study.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;

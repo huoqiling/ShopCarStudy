@@ -33,7 +33,7 @@
             tools:text="77.6" />
 
 
-        <com.zhangxin.study.AddWidget
+        <com.zhangxin.study.view.AddWidget
             android:id="@+id/addWidget"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />

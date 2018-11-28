@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.zhangxin.study.ShopCarView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.zhangxin.study.view.ShopCarView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/flCar"
     android:layout_width="match_parent"
@@ -90,4 +90,4 @@
         android:textSize="12sp"
         tools:text="30"
         tools:visibility="visible" />
-</com.zhangxin.study.ShopCarView>
+</com.zhangxin.study.view.ShopCarView>

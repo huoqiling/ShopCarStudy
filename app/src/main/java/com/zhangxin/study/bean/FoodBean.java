@@ -1,4 +1,4 @@
-package com.zhangxin.study;
+package com.zhangxin.study.bean;
 
 import java.io.Serializable;
 import java.math.BigDecimal;

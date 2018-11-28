@@ -1,4 +1,4 @@
-package com.zhangxin.study;
+package com.zhangxin.study.view;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.zhangxin.study.bean.FoodBean;
+import com.zhangxin.study.R;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
