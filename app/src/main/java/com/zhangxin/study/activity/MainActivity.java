@@ -263,6 +263,11 @@ public class MainActivity extends BaseActivity {
         }
     }
 
+    @Override
+    public boolean doubleExitAppEnable() {
+        return true;
+    }
+
     /**
      * 計算購物車
      *
