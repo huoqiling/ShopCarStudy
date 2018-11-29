@@ -1,5 +1,6 @@
 package com.zhangxin.study.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,6 +18,11 @@ import com.zhangxin.study.bean.FoodBean;
 import com.zhangxin.study.event.FoodEvent;
 import com.zhangxin.study.utils.CommonUtils;
 import com.zhangxin.study.view.AddWidget;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -52,16 +58,21 @@ public class FoodFragment extends BaseLazyFragment {
         foodAdapter = new FoodAdapter(new AddWidget.OnAddClickListener() {
             @Override
             public void add(View view, FoodBean foodBean) {
-                postEvent("addFood",new FoodEvent(view,foodBean));
+                postEvent("addFood", new FoodEvent(view, foodBean));
             }
 
             @Override
             public void sub(FoodBean foodBean) {
-                postEvent("subFood",new FoodEvent(null,foodBean));
+                postEvent("subFood", new FoodEvent(null, foodBean));
             }
         });
         recyclerView.setAdapter(foodAdapter);
-        foodAdapter.setNewData(CommonUtils.getFoodBeanList(MyApplication.getInstance()));
+    }
+
+    @Override
+    public void lazyData() {
+        super.lazyData();
+        foodAdapter.setNewData(getData());
     }
 
     @Override
@@ -72,12 +83,12 @@ public class FoodFragment extends BaseLazyFragment {
     @Override
     public void onEventMainThread(BaseEvent event) {
         super.onEventMainThread(event);
-        if(event.getEventName().equals("foodFragment")){
+        if (event.getEventName().equals("foodFragment")) {
             FoodEvent foodEvent = (FoodEvent) event.getObject();
             updateSelectFoodCount(foodEvent.getFoodBean());
         }
 
-        if(event.getEventName().equals("clearSelect")){
+        if (event.getEventName().equals("clearSelect")) {
             for (int i = 0; i < foodAdapter.getData().size(); i++) {
                 FoodBean foodBean = foodAdapter.getItem(i);
                 foodBean.setSelectCount(0);
@@ -99,6 +110,26 @@ public class FoodFragment extends BaseLazyFragment {
                 foodAdapter.setData(i, fb);
             }
         }
+    }
+
+    private List<FoodBean> getData() {
+        List<FoodBean> foodBeanList = new ArrayList<>();
+        for (int i = 0; i < 50; i++) {
+            FoodBean foodBean = new FoodBean();
+            foodBean.setId(i + "");
+            foodBean.setName("食品：" + (i + 1));
+            foodBean.setPrice(onePoint(new Random().nextDouble() * 100));
+            foodBean.setScale("预售：" + new Random().nextInt(100));
+            int resId = MyApplication.getInstance().getResources().getIdentifier("food" + new Random().nextInt(8), "mipmap", "com.zhangxin.study");
+            foodBean.setIconId(resId);
+            foodBeanList.add(foodBean);
+        }
+        return foodBeanList;
+    }
+
+    private BigDecimal onePoint(double d) {
+        BigDecimal b = new BigDecimal(d);
+        return b.setScale(1, BigDecimal.ROUND_HALF_DOWN);
     }
 
     @Override

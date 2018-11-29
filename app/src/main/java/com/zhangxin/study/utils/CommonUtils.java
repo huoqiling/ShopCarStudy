@@ -33,26 +33,6 @@ public class CommonUtils {
         return (int) (d * scale + 05.f);
     }
 
-    public static List<FoodBean> getFoodBeanList(Context context) {
-        List<FoodBean> foodBeanList = new ArrayList<>();
-        for (int i = 0; i < 50; i++) {
-            FoodBean foodBean = new FoodBean();
-            foodBean.setId(i+"");
-            foodBean.setName("食品：" + (i + 1));
-            foodBean.setPrice(onePoint(new Random().nextDouble() * 100));
-            foodBean.setScale("预售：" + new Random().nextInt(100));
-            int resId = context.getResources().getIdentifier("food" + new Random().nextInt(8), "mipmap", "com.zhangxin.study");
-            foodBean.setIconId(resId);
-            foodBeanList.add(foodBean);
-        }
-        return foodBeanList;
-    }
-
-    public static BigDecimal onePoint(double d) {
-        BigDecimal b = new BigDecimal(d);
-        return b.setScale(1, BigDecimal.ROUND_HALF_DOWN);
-    }
-
 
     /**
      * 加法

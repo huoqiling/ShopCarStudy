@@ -234,14 +234,14 @@ public class MainActivity extends BaseActivity {
         popAdapter = new PopCarAdapter(new AddWidget.OnAddClickListener() {
             @Override
             public void add(View view, FoodBean foodBean) {
-                postEvent("foodFragment", new FoodEvent(view, foodBean));
                 calculateCar(foodBean);
+                postEvent("foodFragment", new FoodEvent(view, foodBean));
             }
 
             @Override
             public void sub(FoodBean foodBean) {
-                postEvent("foodFragment", new FoodEvent(null, foodBean));
                 calculateCar(foodBean);
+                postEvent("foodFragment", new FoodEvent(null, foodBean));
             }
         });
         popRecyclerView.setAdapter(popAdapter);
@@ -364,10 +364,10 @@ public class MainActivity extends BaseActivity {
                     public void clearCar() {
                         updateAmount(new BigDecimal(0));
                         tvCarBadge.setVisibility(View.GONE);
-                        postEvent("clearSelect");
                         popAdapter.getData().clear();
                         popAdapter.notifyDataSetChanged();
                         behavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                        postEvent("clearSelect");
                     }
                 }).show(getSupportFragmentManager(), "clearDialog");
                 break;
