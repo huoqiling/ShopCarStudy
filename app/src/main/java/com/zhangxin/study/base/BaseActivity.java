@@ -1,13 +1,21 @@
 package com.zhangxin.study.base;
 
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.gyf.barlibrary.ImmersionBar;
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.zhangxin.study.MyApplication;
 import com.zhangxin.study.R;
+import com.zhangxin.study.view.CustomLoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -25,6 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     private Unbinder unbinder;
     private long exitTime = 0; //双击退出函数变量
+    private CustomLoadingDialog loadingDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +49,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             EventBus.getDefault().register(this);
         }
         initView();
+        // 所有子类都将继承这些相同的属性,请在设置界面之后设置
+        ImmersionBar.with(this).init();
     }
 
 
@@ -70,6 +81,43 @@ public abstract class BaseActivity extends AppCompatActivity {
     @Subscribe
     public void onEventMainThread(BaseEvent event) {
 
+    }
+
+
+    /**
+     * 显示弹窗
+     */
+    public void showProgressDialog() {
+        showProgressHud(true);
+    }
+
+    /***
+     * 控制弹窗是否可已取消
+     *
+     * @param cancellable
+     */
+    public void showProgressHud(boolean cancellable) {
+        try {
+            loadingDialog = new CustomLoadingDialog();
+            loadingDialog.setIsCancellable(cancellable)
+                    .show(getSupportFragmentManager(), "loadingDialog");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    /**
+     * 隐藏弹窗
+     */
+    public void dismissProgressDialog() {
+        try {
+            if (null != loadingDialog) {
+                loadingDialog.dismiss();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -110,6 +158,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // 如果你的app可以横竖屏切换，并且适配4.4或者emui3手机请务必在onConfigurationChanged方法里添加这句话
+        ImmersionBar.with(this).init();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         MyApplication.getInstance().removeActivity(this);
@@ -119,6 +174,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (useEventBus()) {
             EventBus.getDefault().unregister(this);
         }
+        // 必须调用该方法，防止内存泄漏
+        ImmersionBar.with(this).destroy();
     }
 
 }

@@ -121,7 +121,7 @@ public abstract class BaseLazyFragment extends BaseFragment implements LazyFragm
 
     @Override
     public void setTimeInterval(long mTimeInterval) {
-
+         this.mTimeInterval = mTimeInterval;
     }
 
 

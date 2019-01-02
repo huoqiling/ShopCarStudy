@@ -3,6 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.zhangxin.study">
 
+    <!--允许应用程序完全使用网络-->
+
+    <uses-permission android:name="android.permission.INTERNET"/>
+
+    <!--允许应用程序改变网络状态-->
+
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE"/>
+
+    <!--允许应用程序改变WIFI连接状态-->
+
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+
+    <!--允许应用程序访问有关的网络信息-->
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+
+    <!--允许应用程序访问WIFI网卡的网络信息-->
+
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -12,8 +32,23 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+
+        <!--适配全面屏-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.4" />
+
+        <!--适配华为（huawei）刘海屏-->
+        <meta-data
+            android:name="android.notch_support"
+            android:value="true"/>
+        <!--适配小米（xiaomi）刘海屏-->
+        <meta-data
+            android:name="notch.config"
+            android:value="portrait|landscape" />
+
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,6 +56,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-    </application>
+        <activity android:name=".activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.LoginActivity"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".activity.MainActivity"
+            android:screenOrientation="portrait"/>
+</application>
 
 </manifest>
