@@ -89,4 +89,7 @@ dependencies {
 
     implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
+
+    implementation 'com.github.huangyanbin:SmartTable:2.2.0'
+
 }

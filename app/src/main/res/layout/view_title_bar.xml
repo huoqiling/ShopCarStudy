@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/black_17161f"
+        android:orientation="vertical"
+        app:contentInsetStart="0dp"
+        app:contentInsetStartWithNavigation="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:id="@+id/flLeft"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/btnLeftImg"
+                    style="@style/common_image_left"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/btnLeftText"
+                    style="@style/common_text_left"
+                    android:visibility="gone"
+                    tools:text="leftText" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvTitle"
+                style="@style/common_title_text"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                tools:text="Title" />
+
+            <FrameLayout
+                android:id="@+id/flRight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/btnRightImg"
+                    style="@style/common_image_right"
+                    android:scaleType="fitCenter" />
+
+                <TextView
+                    android:id="@+id/btnRightText"
+                    style="@style/common_text_right"
+                    android:visibility="invisible"
+                    tools:text="rightTitle" />
+            </FrameLayout>
+        </LinearLayout>
+
+    </android.support.v7.widget.Toolbar>
+
+    <View
+        android:id="@+id/v_line"
+        style="@style/common_line" />
+</LinearLayout>

@@ -1,8 +1,7 @@
-package com.zhangxin.study.activity;
+package com.zhangxin.study.activity.store;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -16,6 +15,7 @@ import com.zhangxin.study.cache.UserCache;
 import com.zhangxin.study.net.Bussiness;
 import com.zhangxin.study.net.callback.JsonCallback;
 import com.zhangxin.study.utils.ToastUtil;
+import com.zhangxin.study.view.CustomTitleBar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,8 +40,8 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.btnRegister)
     TextView btnRegister;
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
+    @BindView(R.id.titleBar)
+    CustomTitleBar titleBar;
 
 
     @Override
@@ -54,21 +54,27 @@ public class LoginActivity extends BaseActivity {
         initToolbar();
     }
 
-    private void initToolbar(){
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle("");
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+    private void initToolbar() {
+        setSupportActionBar(titleBar.toolbar);
+        titleBar.toolbar.setTitle("");
+        titleBar.setOnCustomTitleBarListener(new CustomTitleBar.OnCustomTitleBarListener() {
             @Override
-            public void onClick(View v) {
+            public void onLeftClick() {
                 finish();
+            }
+
+            @Override
+            public void onRightClick() {
+
+            }
+
+            @Override
+            public void onTitleClick() {
+
             }
         });
     }
 
-    @Override
-    protected boolean useEventBus() {
-        return false;
-    }
 
     @OnClick({R.id.btnLogin, R.id.btnRegister})
     public void onViewClicked(View view) {
@@ -139,7 +145,6 @@ public class LoginActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 }

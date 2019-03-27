@@ -1,18 +1,14 @@
 package com.zhangxin.study.base;
 
-import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.gyf.barlibrary.ImmersionBar;
-import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.zhangxin.study.MyApplication;
 import com.zhangxin.study.R;
 import com.zhangxin.study.view.CustomLoadingDialog;
@@ -50,7 +46,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
         initView();
         // 所有子类都将继承这些相同的属性,请在设置界面之后设置
-        ImmersionBar.with(this).init();
+        ImmersionBar.with(this).statusBarColor(R.color.black_17161f).fitsSystemWindows(true).init();
     }
 
 
@@ -58,7 +54,9 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     protected abstract void initView();
 
-    protected abstract boolean useEventBus();
+    public boolean useEventBus() {
+        return true;
+    }
 
     public void postEvent(String eventName) {
         postEvent(eventName, null);
@@ -145,6 +143,40 @@ public abstract class BaseActivity extends AppCompatActivity {
         } else {
             exitApp();
         }
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        this.startActivity(intent);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        this.startActivityForResult(intent, requestCode);
+    }
+
+    public void startIntent(Intent i, int requestCode) {
+        this.startActivityForResult(i, requestCode);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, BaseIntent baseIntent) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivity(intent);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, BaseIntent baseIntent, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(this, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivityForResult(intent, requestCode);
+    }
+
+    public interface BaseIntent {
+        void setIntent(Intent intent);
     }
 
     /**

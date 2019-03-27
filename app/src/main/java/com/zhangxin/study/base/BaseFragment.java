@@ -42,11 +42,19 @@ public abstract class BaseFragment extends Fragment{
     private boolean mIsVisibleToUser; // 是否可见
     protected final String baseTag = UUID.randomUUID().toString(); // 用getBaseTag()获取
 
+    private Activity activity;
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
         mIsVisibleToUser = isVisibleToUser;
 
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = activity;
     }
 
     @Nullable
@@ -74,6 +82,41 @@ public abstract class BaseFragment extends Fragment{
         if (useEventBus()) {
             EventBus.getDefault().register(this);
         }
+    }
+
+
+    public void startIntent(Class<? extends Activity> activityClass) {
+        Intent intent = new Intent();
+        intent.setClass(activity, activityClass);
+        this.startActivity(intent);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(activity, activityClass);
+        this.startActivityForResult(intent, requestCode);
+    }
+
+    public void startIntent(Intent i, int requestCode) {
+        this.startActivityForResult(i, requestCode);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, BaseIntent baseIntent) {
+        Intent intent = new Intent();
+        intent.setClass(activity, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivity(intent);
+    }
+
+    public void startIntent(Class<? extends Activity> activityClass, BaseIntent baseIntent, int requestCode) {
+        Intent intent = new Intent();
+        intent.setClass(activity, activityClass);
+        baseIntent.setIntent(intent);
+        this.startActivityForResult(intent, requestCode);
+    }
+
+    public interface BaseIntent {
+        void setIntent(Intent intent);
     }
 
     protected abstract @LayoutRes int getLayoutId();
@@ -144,39 +187,6 @@ public abstract class BaseFragment extends Fragment{
         }
     }
 
-    public void start(Class<? extends Activity> activityClass) {
-        Intent intent = new Intent();
-        intent.setClass(MyApplication.getInstance(), activityClass);
-        this.startActivity(intent);
-    }
-
-    public void start(Class<? extends Activity> activityClass, int requestCode) {
-        Intent intent = new Intent();
-        intent.setClass(MyApplication.getInstance(), activityClass);
-        this.startActivityForResult(intent, requestCode);
-    }
-
-    public void start(Intent i, int requestCode) {
-        this.startActivityForResult(i, requestCode);
-    }
-
-    public void start(Class<? extends Activity> activityClass, BaseIntent baseIntent) {
-        Intent intent = new Intent();
-        intent.setClass(MyApplication.getInstance(), activityClass);
-        baseIntent.setIntent(intent);
-        this.startActivity(intent);
-    }
-
-    public void start(Class<? extends Activity> activityClass, BaseIntent baseIntent, int requestCode) {
-        Intent intent = new Intent();
-        intent.setClass(MyApplication.getInstance(), activityClass);
-        baseIntent.setIntent(intent);
-        this.startActivityForResult(intent, requestCode);
-    }
-
-    public interface BaseIntent {
-        void setIntent(Intent intent);
-    }
 
     /**
      * 给TextView 赋值

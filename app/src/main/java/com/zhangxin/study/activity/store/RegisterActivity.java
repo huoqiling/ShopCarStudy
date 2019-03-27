@@ -1,4 +1,4 @@
-package com.zhangxin.study.activity;
+package com.zhangxin.study.activity.store;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -74,10 +74,6 @@ public class RegisterActivity extends BaseActivity {
         });
     }
 
-    @Override
-    protected boolean useEventBus() {
-        return false;
-    }
 
     @OnClick(R.id.btnRegister)
     public void onViewClicked() {

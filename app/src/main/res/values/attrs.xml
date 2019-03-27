@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--标题栏-->
+    <declare-styleable name="CustomTitleBar">
+        <attr name="titleText" format="string" />
+        <attr name="leftButtonTextColor" format="color" />
+        <attr name="leftButtonText" format="string" />
+        <attr name="showLeftImage" format="boolean" />
+        <attr name="leftImageSrc" format="reference|color" />
+        <attr name="rightButtonText" format="string" />
+        <attr name="rightButtonTextColor" format="color" />
+        <attr name="showRightImages" format="boolean" />
+        <attr name="rightImageSrc" format="reference|color" />
+        <attr name="maxSize" format="integer" />
+    </declare-styleable>
+</resources>

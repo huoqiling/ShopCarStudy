@@ -1,4 +1,4 @@
-package com.zhangxin.study.activity;
+package com.zhangxin.study.activity.store;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
@@ -121,10 +121,6 @@ public class MainActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected boolean useEventBus() {
-        return true;
-    }
 
     private void initToolbar() {
         toolbar.setTitle("底部弹出Behavior");

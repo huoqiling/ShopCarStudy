@@ -1,6 +1,5 @@
 package com.zhangxin.study.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,13 +9,11 @@ import android.view.ViewGroup;
 
 import com.zhangxin.study.MyApplication;
 import com.zhangxin.study.R;
-import com.zhangxin.study.activity.MainActivity;
 import com.zhangxin.study.adapter.FoodAdapter;
 import com.zhangxin.study.base.BaseEvent;
 import com.zhangxin.study.base.BaseLazyFragment;
 import com.zhangxin.study.bean.FoodBean;
 import com.zhangxin.study.event.FoodEvent;
-import com.zhangxin.study.utils.CommonUtils;
 import com.zhangxin.study.view.AddWidget;
 
 import java.math.BigDecimal;

@@ -1,9 +1,11 @@
-package com.zhangxin.study.activity;
+package com.zhangxin.study.activity.store;
 
 import android.content.Intent;
 import android.os.Handler;
 
 import com.zhangxin.study.R;
+import com.zhangxin.study.activity.store.LoginActivity;
+import com.zhangxin.study.activity.store.MainActivity;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.cache.UserCache;
 
@@ -41,8 +43,4 @@ public class SplashActivity extends BaseActivity {
         this.finish();
     }
 
-    @Override
-    protected boolean useEventBus() {
-        return false;
-    }
 }
