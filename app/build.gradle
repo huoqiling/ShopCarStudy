@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+def AAVersion = '4.4.0'
 
 android {
     compileSdkVersion 27
@@ -9,6 +10,17 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        renderscriptTargetApi 18
+        renderscriptSupportModeEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+              //这里的包名和applicationId一致
+              arguments = ['resourcePackageName': "com.zhangxin.study"]
+            }
+        }
+
     }
     buildTypes {
         release {
@@ -55,6 +67,12 @@ android {
             }
         }
     }
+
+//    packagingOptions {
+//        exclude 'META-INF/maven/org.androidannotations/androidannotations-api/pom.xml'
+//        exclude 'META-INF/maven/org.androidannotations/androidannotations-api/pom.properties'
+//        exclude 'androidannotations-api.properties'
+//    }
 }
 
 dependencies {
@@ -91,5 +109,13 @@ dependencies {
     implementation 'com.gyf.immersionbar:immersionbar:2.3.3-beta09'
 
     implementation 'com.github.huangyanbin:SmartTable:2.2.0'
+
+    implementation 'org.igniterealtime.smack:smack-android-extensions:4.1.9'
+    implementation 'org.igniterealtime.smack:smack-tcp:4.1.9'
+
+    implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
+
+    annotationProcessor  "org.androidannotations:androidannotations:$AAVersion"
+    implementation "org.androidannotations:androidannotations-api:$AAVersion"
 
 }

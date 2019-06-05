@@ -126,6 +126,12 @@ public class MainActivity extends BaseActivity {
         toolbar.setTitle("底部弹出Behavior");
         setSupportActionBar(toolbar);
         toolbar.setTitleTextColor(getResources().getColor(R.color.white));
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         collapsingToolbar.setTitle("CollapsingToolbar");
         collapsingToolbar.setExpandedTitleColor(Color.WHITE);
         collapsingToolbar.setCollapsedTitleTextColor(Color.WHITE);
@@ -257,11 +263,6 @@ public class MainActivity extends BaseActivity {
             FoodEvent foodEvent = (FoodEvent) event.getObject();
             calculateCar(foodEvent.getFoodBean());
         }
-    }
-
-    @Override
-    public boolean doubleExitAppEnable() {
-        return true;
     }
 
     /**

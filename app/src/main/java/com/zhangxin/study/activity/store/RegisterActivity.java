@@ -12,7 +12,7 @@ import com.lzy.okgo.model.Response;
 import com.zhangxin.study.R;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.bean.UserBean;
-import com.zhangxin.study.net.Bussiness;
+import com.zhangxin.study.net.Business;
 import com.zhangxin.study.net.callback.JsonCallback;
 import com.zhangxin.study.utils.ToastUtil;
 
@@ -128,7 +128,7 @@ public class RegisterActivity extends BaseActivity {
         }
 
         showProgressDialog();
-        Bussiness.register(name, confirmPassword, confirmPayPassword, phone, new JsonCallback<UserBean>() {
+        Business.register(name, confirmPassword, confirmPayPassword, phone, new JsonCallback<UserBean>() {
             @Override
             public void onSuccess(Response<UserBean> response) {
                 super.onSuccess(response);

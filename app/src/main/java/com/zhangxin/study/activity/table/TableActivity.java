@@ -4,11 +4,15 @@ import android.os.Bundle;
 
 import com.bin.david.form.core.SmartTable;
 import com.bin.david.form.data.column.Column;
+import com.bin.david.form.data.column.ColumnInfo;
 import com.bin.david.form.data.table.ArrayTableData;
 import com.bin.david.form.data.table.TableData;
+import com.bin.david.form.listener.OnColumnClickListener;
+import com.zhangxin.study.CustomDialogActivity;
 import com.zhangxin.study.R;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.bean.UserInfo;
+import com.zhangxin.study.utils.ToastUtil;
 import com.zhangxin.study.view.CustomTitleBar;
 
 import java.util.ArrayList;
@@ -45,6 +49,7 @@ public class TableActivity extends BaseActivity {
     private void initTitleBar() {
         setSupportActionBar(titleBar.toolbar);
         getSupportActionBar().setTitle("");
+        titleBar.setRightBtnText("弹窗");
         titleBar.setOnCustomTitleBarListener(new CustomTitleBar.OnCustomTitleBarListener() {
             @Override
             public void onLeftClick() {
@@ -53,6 +58,7 @@ public class TableActivity extends BaseActivity {
 
             @Override
             public void onRightClick() {
+                startIntent(CustomDialogActivity.class);
 
             }
 
@@ -71,6 +77,18 @@ public class TableActivity extends BaseActivity {
         list.add(new UserInfo("段誉","六脉神剑",24));
         list.add(new UserInfo("天山童姥","八荒六合唯我独尊功",96));
         table.setData(list);
+        table.setOnColumnClickListener(new OnColumnClickListener() {
+            @Override
+            public void onClick(ColumnInfo columnInfo) {
+
+            }
+        });
+        table.getTableData().setOnItemClickListener(new TableData.OnItemClickListener() {
+            @Override
+            public void onClick(Column column, String value, Object o, int col, int row) {
+                ToastUtil.showTextToast(value);
+            }
+        });
     }
 
     @Override

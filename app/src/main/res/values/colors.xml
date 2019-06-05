@@ -17,4 +17,7 @@
     <color name="black_323233">#323233</color>
     <color name="yellow_ffa810">#ffa810</color>
     <color name="black_17161f">#17161f</color>
+
+    <color name="color_wave_blue">#503bff</color>
+    <color name="color_boat_blue">#8293ff</color>
 </resources>

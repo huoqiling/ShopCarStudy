@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.zhangxin.study.menu.SectorMenuButton
+        android:id="@+id/sector_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:aebAnimDurationMillis="175"
+        app:aebBlurBackground="true"
+        app:aebBlurRadius="10"
+        android:layout_gravity="center_vertical"
+        app:aebButtonElevation="0dp"
+        app:aebButtonGapDp="70dp"
+        app:aebEndAngleDegree="359"
+        app:aebIsSelectionMode="false"
+        app:aebMainButtonRotateAnimDurationMillis="400"
+        app:aebMainButtonRotateDegree="0"
+        app:aebMainButtonSizeDp="50dp"
+        app:aebRippleEffect="true"
+        app:aebStartAngleDegree="270"
+        app:aebSubButtonSizeDp="30dp" />
+</FrameLayout>

@@ -9,8 +9,10 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.gyf.barlibrary.ImmersionBar;
 import com.zhangxin.study.R;
+import com.zhangxin.study.activity.menu.MenuActivity;
 import com.zhangxin.study.activity.store.SplashActivity;
 import com.zhangxin.study.activity.table.TableActivity;
+import com.zhangxin.study.androidannotations.AndroidAnnotationsActivity;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.view.CustomTitleBar;
 
@@ -55,16 +57,34 @@ public class StudyListActivity extends BaseActivity {
                     case 1:
                         startIntent(TableActivity.class);
                         break;
+                    case 2:
+                        startIntent(MenuActivity.class);
+                        break;
+                    case 3:
+                        startIntent(AndroidAnnotationsActivity.class);
+                        break;
+                    case 4:
+                        startIntent(CanvasActivity.class);
+                        break;
                 }
             }
         });
 
     }
 
+
+    @Override
+    public boolean doubleExitAppEnable() {
+        return true;
+    }
+
     private List<String> getData() {
         List<String> dataList = new ArrayList<>();
         dataList.add("商城");
         dataList.add("仿Excel表格效果");
+        dataList.add("扇形菜单按钮");
+        dataList.add("AndroidAnnotations");
+        dataList.add("canvas");
         return dataList;
     }
 

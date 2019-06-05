@@ -14,4 +14,39 @@
         <attr name="rightImageSrc" format="reference|color" />
         <attr name="maxSize" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="SectorMenuButton">
+        <attr name="aebMainButtonSizeDp" format="dimension|reference" />
+        <attr name="aebSubButtonSizeDp" format="dimension|reference" />
+        <attr name="aebButtonGapDp" format="dimension|reference" />
+        <attr name="aebStartAngleDegree" format="integer|reference" />
+        <attr name="aebEndAngleDegree" format="integer|reference" />
+        <attr name="aebAnimDurationMillis" format="integer|reference" />
+        <attr name="aebButtonElevation" format="dimension|reference" />
+        <attr name="aebMaskBackgroundColor" format="color|reference" />
+        <attr name="aebIsSelectionMode" format="boolean" />
+        <attr name="aebMainButtonTextColor" format="color|reference" />
+        <attr name="aebSubButtonTextColor" format="color|reference" />
+        <attr name="aebMainButtonTextSizeSp" format="dimension|reference" />
+        <attr name="aebSubButtonTextSizeSp" format="dimension|reference" />
+        <attr name="aebRippleEffect" format="boolean" />
+        <attr name="aebRippleColor" format="color|reference"/>
+        <attr name="aebMainButtonRotateDegree" format="integer|reference"/>
+        <attr name="aebMainButtonRotateAnimDurationMillis" format="integer|reference"/>
+        <attr name="aebBlurBackground" format="boolean" />
+        <attr name="aebBlurRadius" format="float|reference"/>
+    </declare-styleable>
+
+    <!-- 自定义图片的TextView -->
+    <declare-styleable name="DrawableTextView">
+        <attr name="drawableImage" format="reference" />
+        <attr name="drawableWidth" format="dimension" />
+        <attr name="drawableHeight" format="dimension" />
+        <attr name="drawableLocation">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+    </declare-styleable>
 </resources>

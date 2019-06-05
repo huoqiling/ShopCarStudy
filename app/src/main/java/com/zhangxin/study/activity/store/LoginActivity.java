@@ -12,7 +12,7 @@ import com.zhangxin.study.R;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.bean.UserBean;
 import com.zhangxin.study.cache.UserCache;
-import com.zhangxin.study.net.Bussiness;
+import com.zhangxin.study.net.Business;
 import com.zhangxin.study.net.callback.JsonCallback;
 import com.zhangxin.study.utils.ToastUtil;
 import com.zhangxin.study.view.CustomTitleBar;
@@ -80,7 +80,7 @@ public class LoginActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnLogin:
-                login();
+                startIntent(MainActivity.class);
                 break;
             case R.id.btnRegister:
                 startActivityForResult(new Intent(this, RegisterActivity.class), 1);
@@ -100,7 +100,7 @@ public class LoginActivity extends BaseActivity {
             return;
         }
         showProgressDialog();
-        Bussiness.login(name, password, new JsonCallback<UserBean>() {
+        Business.login(name, password, new JsonCallback<UserBean>() {
             @Override
             public void onSuccess(Response<UserBean> response) {
                 super.onSuccess(response);

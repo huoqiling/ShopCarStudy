@@ -4,7 +4,7 @@ import com.lzy.okgo.model.HttpParams;
 import com.zhangxin.study.bean.UserBean;
 import com.zhangxin.study.net.callback.JsonCallback;
 
-public class Bussiness {
+public class Business {
 
     private final static String BASE_URL = "http://192.168.2.132:8080/";
     private final static String REGISTER_URL = BASE_URL + "user/register";
