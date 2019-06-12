@@ -76,13 +76,16 @@
             android:theme="@style/MyToolsAddAvatar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
 
-        <activity android:name=".activity.menu.MenuActivity"/>
+        <activity android:name=".activity.menu.MenuActivity" />
 
-        <activity android:name=".androidannotations.AndroidAnnotationsActivity"/>
+        <activity android:name=".androidannotations.AndroidAnnotationsActivity" />
 
-        <activity android:name=".activity.CanvasActivity"/>
+        <activity android:name=".activity.CanvasActivity" />
+
+        <activity
+            android:name=".activity.WebSocketActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
     </application>
-
 
 
 </manifest>

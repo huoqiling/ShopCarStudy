@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/etContent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:hint="请输入内容"
+        android:imeOptions="actionDone"
+        android:textColor="@color/black_17161f"
+        android:textSize="15sp">
+
+        <requestFocus />
+    </EditText>
+
+
+    <TextView
+        android:id="@+id/btnSend"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center"
+        android:minWidth="80dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        android:text="发送"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/tvContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:hint="你好"
+        android:textColor="@color/black_17161f"
+        android:textSize="15sp" />
+</LinearLayout>

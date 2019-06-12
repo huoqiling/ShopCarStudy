@@ -66,6 +66,9 @@ public class StudyListActivity extends BaseActivity {
                     case 4:
                         startIntent(CanvasActivity.class);
                         break;
+                    case 5:
+                        startIntent(WebSocketActivity.class);
+                        break;
                 }
             }
         });
@@ -85,6 +88,7 @@ public class StudyListActivity extends BaseActivity {
         dataList.add("扇形菜单按钮");
         dataList.add("AndroidAnnotations");
         dataList.add("canvas");
+        dataList.add("webSocket");
         return dataList;
     }
 
