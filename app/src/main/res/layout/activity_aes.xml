@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activity.AESActivity">
+
+
+    <TextView
+        android:id="@+id/btnEncryption"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:text="加密"
+        android:background="@color/color_boat_blue"/>
+
+
+    <TextView
+        android:id="@+id/btnDecryption"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_margin="15dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:gravity="center"
+        android:text="解密"
+        android:background="@color/colorPrimary"/>
+
+
+    <cn.bingoogolapple.photopicker.widget.BGASortableNinePhotoLayout
+        android:id="@+id/photoLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:bga_snpl_deleteDrawable="@mipmap/bga_pp_ic_delete"
+        app:bga_snpl_deleteDrawableOverlapQuarter="true"
+        app:bga_snpl_editable="true"
+        app:bga_snpl_itemCornerRadius="0dp"
+        app:bga_snpl_itemSpanCount="4"
+        app:bga_snpl_itemWhiteSpacing="10dp"
+        app:bga_snpl_itemWidth="0dp"
+        app:bga_snpl_maxItemCount="9"
+        app:bga_snpl_otherWhiteSpacing="0dp"
+        app:bga_snpl_placeholderDrawable="@mipmap/bga_pp_ic_holder_dark"
+        app:bga_snpl_plusDrawable="@mipmap/iv_apply_add"
+        app:bga_snpl_plusEnable="true"
+        app:bga_snpl_sortable="false" />
+</LinearLayout>

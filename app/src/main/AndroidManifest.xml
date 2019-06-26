@@ -22,9 +22,13 @@
     <!-- 允许应用程序访问WIFI网卡的网络信息 -->
 
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
     <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".MyApplication"
@@ -70,22 +74,18 @@
             android:screenOrientation="portrait" />
         <activity android:name=".activity.store.SplashActivity" />
         <activity android:name=".activity.table.TableActivity" />
-
         <activity
             android:name=".CustomDialogActivity"
             android:theme="@style/MyToolsAddAvatar"
             android:windowSoftInputMode="stateVisible|adjustResize" />
-
         <activity android:name=".activity.menu.MenuActivity" />
-
         <activity android:name=".androidannotations.AndroidAnnotationsActivity" />
-
         <activity android:name=".activity.CanvasActivity" />
-
         <activity
             android:name=".activity.WebSocketActivity"
             android:windowSoftInputMode="stateHidden|adjustPan" />
+        <activity android:name=".activity.RSAActivity" />
+        <activity android:name=".activity.AESActivity"/>
     </application>
-
 
 </manifest>

@@ -16,8 +16,8 @@ android {
 
         javaCompileOptions {
             annotationProcessorOptions {
-              //这里的包名和applicationId一致
-              arguments = ['resourcePackageName': "com.zhangxin.study"]
+                //这里的包名和applicationId一致
+                arguments = ['resourcePackageName': "com.zhangxin.study"]
             }
         }
 
@@ -95,7 +95,7 @@ dependencies {
     implementation 'com.lzy.net:okgo:3.0.4'
     implementation 'com.orhanobut:logger:1.15'
 
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
     implementation 'com.alibaba:fastjson:1.2.24'
 
     //glide
@@ -115,9 +115,11 @@ dependencies {
 
     implementation 'com.oguzdev:CircularFloatingActionMenu:1.0.2'
 
-    annotationProcessor  "org.androidannotations:androidannotations:$AAVersion"
+    annotationProcessor "org.androidannotations:androidannotations:$AAVersion"
     implementation "org.androidannotations:androidannotations-api:$AAVersion"
-
-    implementation 'org.java-websocket:Java-WebSocket:1.3.0'
+    implementation 'org.java-websocket:Java-WebSocket:1.3.8'
+    implementation 'cn.bingoogolapple:bga-photopicker:1.2.8'
+    implementation 'cn.bingoogolapple:bga-baseadapter:1.2.8'
+    implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
 
 }

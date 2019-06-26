@@ -69,6 +69,12 @@ public class StudyListActivity extends BaseActivity {
                     case 5:
                         startIntent(WebSocketActivity.class);
                         break;
+                    case 6:
+                        startIntent(RSAActivity.class);
+                        break;
+                    case 7:
+                        startIntent(AESActivity.class);
+                        break;
                 }
             }
         });
@@ -89,6 +95,8 @@ public class StudyListActivity extends BaseActivity {
         dataList.add("AndroidAnnotations");
         dataList.add("canvas");
         dataList.add("webSocket");
+        dataList.add("rsa加密解密");
+        dataList.add("aes文件加解密");
         return dataList;
     }
 
