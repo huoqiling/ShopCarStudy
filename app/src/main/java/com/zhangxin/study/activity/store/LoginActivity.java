@@ -7,7 +7,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.lzy.okgo.model.Response;
 import com.zhangxin.study.R;
 import com.zhangxin.study.base.BaseActivity;
 import com.zhangxin.study.bean.UserBean;
@@ -20,6 +19,8 @@ import com.zhangxin.study.view.CustomTitleBar;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * @author zhangxin
@@ -102,10 +103,9 @@ public class LoginActivity extends BaseActivity {
         showProgressDialog();
         Business.login(name, password, new JsonCallback<UserBean>() {
             @Override
-            public void onSuccess(Response<UserBean> response) {
-                super.onSuccess(response);
+            public void onSuccess(UserBean userBean, Call call, Response response) {
+                dismissProgressDialog();
                 try {
-                    UserBean userBean = response.body();
                     if (userBean.isSuccess()) {
                         UserCache.setLoginState(true);
                         ToastUtil.showTextToast("登录成功");
@@ -120,8 +120,9 @@ public class LoginActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Response<UserBean> response) {
-                super.onError(response);
+            public void onError(Call call, okhttp3.Response response, Exception e) {
+                super.onError(call, response, e);
+                dismissProgressDialog();
             }
         });
     }

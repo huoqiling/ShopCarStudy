@@ -19,6 +19,7 @@ import com.zhangxin.study.utils.ToastUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import okhttp3.Call;
 
 
 /**
@@ -130,16 +131,14 @@ public class RegisterActivity extends BaseActivity {
         showProgressDialog();
         Business.register(name, confirmPassword, confirmPayPassword, phone, new JsonCallback<UserBean>() {
             @Override
-            public void onSuccess(Response<UserBean> response) {
-                super.onSuccess(response);
+            public void onSuccess(UserBean userBean, Call call, okhttp3.Response response) {
                 dismissProgressDialog();
                 try {
-                    UserBean userBean = response.body();
                     if (userBean.isSuccess()) {
                         ToastUtil.showTextToast("注册成功");
                         Intent intent = new Intent();
                         intent.putExtra("name", userBean.data.name);
-                        setResult(RESULT_OK,intent);
+                        setResult(RESULT_OK, intent);
                         finish();
                     } else {
                         ToastUtil.showTextToast(userBean.errorMessage);
@@ -150,8 +149,8 @@ public class RegisterActivity extends BaseActivity {
             }
 
             @Override
-            public void onError(Response<UserBean> response) {
-                super.onError(response);
+            public void onError(Call call, okhttp3.Response response, Exception e) {
+                super.onError(call, response, e);
                 dismissProgressDialog();
             }
         });
@@ -160,7 +159,6 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
         ButterKnife.bind(this);
     }
 }

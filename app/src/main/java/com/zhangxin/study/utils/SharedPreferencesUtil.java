@@ -8,6 +8,13 @@ import com.zhangxin.study.MyApplication;
 import java.lang.reflect.Method;
 import java.util.Map;
 
+/**
+ *
+ @date 2019/6/27
+ @author zhangxin
+ @desc
+ *
+ **/
 public class SharedPreferencesUtil {
 
     /**

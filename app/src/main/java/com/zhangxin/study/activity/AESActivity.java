@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.zhangxin.study.R;
 import com.zhangxin.study.base.BaseActivity;
+import com.zhangxin.study.utils.AESUtil;
+import com.zhangxin.study.utils.LogUtil;
 import com.zhangxin.study.utils.ToastUtil;
 
 import java.io.File;
@@ -45,6 +47,8 @@ public class AESActivity extends BaseActivity {
     private String SD_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/AESImage/";
     private static final int ADD_PHOTO_ITEM = 1;//添加图片
     private static final int LOOK_PHOTO_ITEM = 2;//查看图片
+
+    private String encryptStr = "";
 
 
     @Override
@@ -130,8 +134,12 @@ public class AESActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btnEncryption:
+                encryptStr = AESUtil.encryptString2Base64("你好", "123456", "asadfdedwderfvgd");
+                LogUtil.zhangx("encryptStr--" + encryptStr);
                 break;
             case R.id.btnDecryption:
+                String decryptStr = AESUtil.decryptBase642String(encryptStr, "123456", "asadfdedwderfvgd");
+                LogUtil.zhangx("decryptStr--" + decryptStr);
                 break;
         }
     }

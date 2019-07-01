@@ -1,5 +1,11 @@
 package com.zhangxin.study.utils;
 
+import android.util.Base64;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -8,78 +14,177 @@ import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
+import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- * Created by zyfx_ on 2017/7/4.
- */
-
+ * @author zhangxin
+ * @date 2019/6/27
+ * @desc AES加密需要：明文 + 密钥+ 偏移量（IV）+密码模式(算法/模式/填充)
+ * AES解密需要：密文 + 密钥+ 偏移量（IV）+密码模式(算法/模式/填充)
+ **/
 public class AESUtil {
-    private static final String KEY_ALGORTHM = "AES";
-    private static final String ALGORTHM = "AES/ECB/PKCS5Padding";
+    //-- 算法/模式/填充
+    private static final String CipherMode = "AES/CBC/PKCS7Padding";
 
-    public static SecretKeySpec getSecretKeySpec(byte[] password, int keySize) {
+    //--创建密钥
+    private static SecretKeySpec createKey(String password) {
+        byte[] data = null;
+        if (password == null) {
+            password = "";
+        }
+        StringBuffer sb = new StringBuffer();
+        sb.append(password);
+        String s = null;
+        while (sb.length() < 32) {
+            sb.append(" ");//--密码长度不够32补足到32
+        }
+        s = sb.substring(0, 32);//--截取32位密码
         try {
-            SecureRandom random = SecureRandom.getInstance("SHA1PRNG",new CryptoProvider());
-            random.setSeed(password);
+            data = s.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return new SecretKeySpec(data, "AES");
+    }
 
-            KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORTHM);
-            kgen.init(keySize, random);
+    //--创建偏移量
+    private static IvParameterSpec createIV(String iv) {
+        byte[] data = null;
+        if (iv == null) {
+            iv = "";
+        }
+        StringBuffer sb = new StringBuffer(16);
+        sb.append(iv);
+        String s = null;
+        while (sb.length() < 16) {
+            sb.append(" ");//--偏移量长度不够16补足到16
+        }
+        s = sb.substring(0, 16);//--截取16位偏移量
+        try {
+            data = s.getBytes("UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return new IvParameterSpec(data);
+    }
 
-            SecretKey secretKey = kgen.generateKey();
-            byte[] encoded = secretKey.getEncoded();
-
-            return new SecretKeySpec(encoded, KEY_ALGORTHM);
+    //--加密字节数组到字节数组
+    public static byte[] encryptByte2Byte(byte[] content, String password, String iv) {
+        try {
+            SecretKeySpec key = createKey(password);
+            Cipher cipher = Cipher.getInstance(CipherMode);
+            cipher.init(Cipher.ENCRYPT_MODE, key, createIV(iv));
+            byte[] result = cipher.doFinal(content);
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return null;
     }
 
-    private static Cipher getEncryptCipher(SecretKeySpec key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        Cipher cipher = Cipher.getInstance(ALGORTHM);
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-
-        return cipher;
+    //--加密字节数组到字符串
+    public static String encryptByte2String(byte[] content, String password, String iv) {
+        byte[] data = encryptByte2Byte(content, password, iv);
+        String result = new String(data);
+        return result;
     }
 
-    private static Cipher getDecryptCipher(SecretKeySpec key) throws NoSuchPaddingException, NoSuchAlgorithmException, InvalidKeyException {
-        Cipher cipher = Cipher.getInstance(ALGORTHM);
-        cipher.init(Cipher.DECRYPT_MODE, key);
-
-        return cipher;
+    //--加密字节数组到base64
+    public static String encryptByte2Base64(byte[] content, String password, String iv) {
+        byte[] data = encryptByte2Byte(content, password, iv);
+        String result = new String(Base64.encode(data, Base64.DEFAULT));
+        return result;
     }
 
-    /**
-     2. * 加密
-     3. *
-     4. * @param content 需要加密的内容
-     5. * @param password  加密密码
-     6. * @return
-     7. */
-    public static byte[] encrypt(byte[] content, SecretKeySpec keySpec) {
+    //--加密字符串到字节数组
+    public static byte[] encryptString2Byte(String content, String password, String iv) {
+        byte[] data = null;
         try {
-            Cipher cipher = getEncryptCipher(keySpec);
-            return cipher.doFinal(content);
+            data = content.getBytes("UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        data = encryptByte2Byte(data, password, iv);
+        return data;
     }
 
-    /**解密
-     2. * @param content  待解密内容
-     3. * @param password 解密密钥
-     4. * @return
-     5. */
-    public static byte[] decrypt(byte[] content, SecretKeySpec keySpec) {
+    //--加密字符串到字符串
+    public static String encryptString2String(String content, String password, String iv) {
+        byte[] data = null;
         try {
-            Cipher cipher = getDecryptCipher(keySpec);
-
-            return cipher.doFinal(content);
+            data = content.getBytes("UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        data = encryptByte2Byte(data, password, iv);
+        String result = new String(data);
+        return result;
     }
+
+    //--加密字符串到base64
+    public static String encryptString2Base64(String content, String password, String iv) {
+        byte[] data = null;
+        try {
+            data = content.getBytes("UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        data = encryptByte2Byte(data, password, iv);
+        String result = new String(Base64.encode(data, Base64.DEFAULT));
+        return result;
+    }
+
+    //-- 解密字节数组到字节数组
+    public static byte[] decryptByte2Byte(byte[] content, String password, String iv) {
+        try {
+            SecretKeySpec key = createKey(password);
+            Cipher cipher = Cipher.getInstance(CipherMode);
+            cipher.init(Cipher.DECRYPT_MODE, key, createIV(iv));
+            byte[] result = cipher.doFinal(content);
+            return result;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    //--解密字符串到字节数组
+    public static byte[] decryptString2Byte(String content, String password, String iv) {
+        byte[] data = null;
+        try {
+            data = content.getBytes("UTF-8");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        data = decryptByte2Byte(data, password, iv);
+        return data;
+    }
+
+    //--解密base64到字节数组
+    public static byte[] decryptBase642Byte(String content, String password, String iv) {
+        byte[] data = null;
+        try {
+            data = Base64.decode(content, Base64.DEFAULT);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        data = decryptByte2Byte(data, password, iv);
+        return data;
+    }
+
+    //-- 解密字节数组到字符串
+    public static String decryptByte2String(byte[] content, String password, String iv) {
+        byte[] data = decryptByte2Byte(content, password, iv);
+        String result = new String(data);
+        return result;
+    }
+
+    //-- 解密字节数组到字符串
+    public static String decryptBase642String(String content, String password, String iv) {
+        byte[] data = Base64.decode(content, Base64.DEFAULT);
+        String result = decryptByte2String(data, password, iv);
+        return result;
+    }
+
 }

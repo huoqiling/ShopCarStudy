@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.github.florent37.viewanimator.AnimationListener;
 import com.github.florent37.viewanimator.ViewAnimator;
+import com.zhangxin.study.BuildConfig;
 import com.zhangxin.study.R;
 import com.zhangxin.study.bean.FoodBean;
 
@@ -124,6 +125,10 @@ public class CommonUtils {
                 rootView.removeView(textView);
             }
         }).start();
+    }
+
+    public static boolean isDebug(){
+        return BuildConfig.DEBUG;
     }
 
 }

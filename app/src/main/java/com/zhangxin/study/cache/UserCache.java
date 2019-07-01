@@ -1,7 +1,7 @@
 package com.zhangxin.study.cache;
 
-import com.zhangxin.study.MyApplication;
 import com.zhangxin.study.bean.UserBean;
+import com.zhangxin.study.utils.SharedPreferencesUtil;
 
 /**
  * @Author zhangxin
@@ -10,26 +10,20 @@ import com.zhangxin.study.bean.UserBean;
  **/
 public class UserCache {
 
-    // 安全存储对象
-    public static SecurityStorage storage = new SecurityStorage(MyApplication.getInstance(), PreferencesKey.User.ID);
-
-    public static void clear() {
-        storage.clear();
-    }
 
     /**
      * @return 是否已登录
      */
     public static boolean isLogin() {
-        return storage.getBoolean(PreferencesKey.User.LOGIN_STATE, false);
+        return (boolean) SharedPreferencesUtil.get(PreferencesKey.User.LOGIN_STATE, false);
     }
 
     public static void setLoginState(boolean loginState) {
-        storage.put(PreferencesKey.User.LOGIN_STATE, loginState);
+        SharedPreferencesUtil.put(PreferencesKey.User.LOGIN_STATE, loginState);
     }
 
-    public static void saveUserInfo(UserBean userBean){
-        storage.put(PreferencesKey.User.NAME,userBean);
+    public static void saveUserInfo(UserBean userBean) {
+        SharedPreferencesUtil.put(PreferencesKey.User.NAME, userBean);
     }
 
 }

@@ -17,21 +17,23 @@ package com.zhangxin.study.net.callback;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
-import com.lzy.okgo.OkGo;
 import com.lzy.okgo.callback.AbsCallback;
-import com.lzy.okgo.cookie.store.CookieStore;
-import com.lzy.okgo.request.base.Request;
-import com.zhangxin.study.cache.UserCache;
+import com.zhangxin.study.R;
 import com.zhangxin.study.utils.LogUtil;
+import com.zhangxin.study.utils.ToastUtil;
 
 import java.io.Reader;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
-import java.util.List;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.URL;
+import java.net.UnknownHostException;
 
-import okhttp3.Cookie;
+import okhttp3.Call;
 import okhttp3.HttpUrl;
 import okhttp3.Response;
 
@@ -64,39 +66,7 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
     }
 
     @Override
-    public void onStart(Request<T, ? extends Request> request) {
-        super.onStart(request);
-        try {
-            if (UserCache.isLogin()) {
-                CookieStore cookieStore = OkGo.getInstance().getCookieJar().getCookieStore();
-                httpUrl = HttpUrl.parse("http://192.168.2.132:8080/");
-                List<Cookie> cookies = cookieStore.getCookie(httpUrl);
-                request.headers("Cookie", cookies.toString().substring(1, cookies.toString().length() - 1));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void onSuccess(com.lzy.okgo.model.Response<T> response) {
-
-    }
-
-
-    @Override
-    public void onError(com.lzy.okgo.model.Response<T> response) {
-        super.onError(response);
-    }
-
-    /**
-     * 该方法是子线程处理，不能做ui相关的工作
-     * 主要作用是解析网络返回的 response 对象,生产onSuccess回调中需要的数据对象
-     * 这里的解析工作不同的业务逻辑基本都不一样,所以需要自己实现,以下给出的时模板代码,实际使用根据需要修改
-     */
-    @Override
-    public T convertResponse(Response response){
+    public T convertSuccess(Response response) throws Exception {
         Type genType = getClass().getGenericSuperclass();
         //从上述的类中取出真实的泛型参数，有些类可能有多个泛型，所以是数值
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
@@ -116,6 +86,40 @@ public abstract class JsonCallback<T> extends AbsCallback<T> {
         Gson gs = new Gson();
 
         response.close();
+
         return data;
+    }
+
+    @Override
+    public void onError(Call call, Response response, Exception e) {
+        super.onError(call, response, e);
+        URL url = call.request().url().url();
+        if (response != null) {
+            int code = response.code();
+            if (code == 404) {
+                LogUtil.e("JsonCallback", "404 当前链接不存在");
+            }
+        }
+        if (e instanceof SocketTimeoutException) {
+            LogUtil.e("JsonCallback", "请求超时");
+        } else if (e instanceof SocketException) {
+            LogUtil.e("JsonCallback", "服务器异常");
+            ToastUtil.showTextToast(R.string.serverException);
+        } else if (e instanceof JsonParseException) {
+            LogUtil.e("JsonCallback", "数据解析错误=" + e.toString());
+            ToastUtil.showTextToast(R.string.dataParsingError);
+        } else if (e instanceof UnknownHostException) {
+            LogUtil.e("JsonCallback", "网络连接不可用，请检查网络");
+            ToastUtil.showTextToast(R.string.networkError);
+        } else {
+            LogUtil.e("JsonCallback", e.getMessage());
+        }
+        try {
+            if (null != e.getCause() && "NOT_LOGGEDIN".equals(e.getCause().getMessage())) {
+                ToastUtil.showTextToast(e.getCause().getMessage());
+            }
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
     }
 }

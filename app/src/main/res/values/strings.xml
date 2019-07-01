@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">ShopCarStudy</string>
     <string name="exit_app">再按一次退出程序</string>
+
+    <string name="requestTimeout">请求超时</string>
+    <string name="serverException">服务器异常</string>
+    <string name="dataParsingError">数据解析错误</string>
+    <string name="networkError">网络连接不可用，请检查网络</string>
 </resources>
