@@ -97,6 +97,7 @@ public class StudyListActivity extends BaseActivity {
         dataList.add("webSocket");
         dataList.add("rsa加密解密");
         dataList.add("aes文件加解密");
+        dataList.add("app版本更新");
         return dataList;
     }
 

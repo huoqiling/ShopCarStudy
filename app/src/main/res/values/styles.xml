@@ -15,6 +15,9 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:screenOrientation">portrait</item>
+        <!-- 防止同时按下两个按钮 -->
+        <item name="android:windowEnableSplitTouch">false</item>
+        <item name="android:splitMotionEvents">false</item>
     </style>
 
     <style name="MyToolsAddAvatar" parent="android:style/Theme.Dialog">

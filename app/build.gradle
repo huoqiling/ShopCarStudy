@@ -5,7 +5,7 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "com.zhangxin.study"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
@@ -121,5 +121,7 @@ dependencies {
     implementation 'cn.bingoogolapple:bga-photopicker:1.2.8'
     implementation 'cn.bingoogolapple:bga-baseadapter:1.2.8'
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+    implementation 'com.github.czy1121:update:1.1.1'
+
 
 }
