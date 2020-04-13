@@ -35,11 +35,12 @@ public class SplashActivity extends BaseActivity {
      * 跳转
      */
     private void jumpActivity() {
-        if (UserCache.isLogin()) {
+     /*   if (UserCache.isLogin()) {
             startActivity(new Intent(this,MainActivity.class));
         } else {
             startActivity(new Intent(this,LoginActivity.class));
-        }
+        }*/
+        startActivity(new Intent(this,MainActivity.class));
         this.finish();
     }
 

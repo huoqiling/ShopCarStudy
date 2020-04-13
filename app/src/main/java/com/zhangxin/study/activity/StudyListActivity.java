@@ -14,6 +14,7 @@ import com.zhangxin.study.activity.store.SplashActivity;
 import com.zhangxin.study.activity.table.TableActivity;
 import com.zhangxin.study.androidannotations.AndroidAnnotationsActivity;
 import com.zhangxin.study.base.BaseActivity;
+import com.zhangxin.study.mvp.ui.MVPLoginActivity;
 import com.zhangxin.study.view.CustomTitleBar;
 
 import java.util.ArrayList;
@@ -75,6 +76,12 @@ public class StudyListActivity extends BaseActivity {
                     case 7:
                         startIntent(AESActivity.class);
                         break;
+                    case 8:
+                        startIntent(AppUpdateActivity.class);
+                        break;
+                    case 9:
+                        startIntent(MVPLoginActivity.class);
+                        break;
                 }
             }
         });
@@ -98,6 +105,7 @@ public class StudyListActivity extends BaseActivity {
         dataList.add("rsa加密解密");
         dataList.add("aes文件加解密");
         dataList.add("app版本更新");
+        dataList.add("mvp学习");
         return dataList;
     }
 

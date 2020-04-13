@@ -84,7 +84,8 @@
             android:windowSoftInputMode="stateHidden|adjustPan" />
         <activity android:name=".activity.RSAActivity" />
         <activity android:name=".activity.AESActivity" />
-        <activity android:name=".activity.AppUpdateActivity"/>
+        <activity android:name=".activity.AppUpdateActivity" />
+        <activity android:name=".mvp.ui.MVPLoginActivity"/>
     </application>
 
 </manifest>
