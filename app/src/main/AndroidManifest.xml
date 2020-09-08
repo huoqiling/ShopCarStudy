@@ -27,6 +27,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
 
     <application
         android:name=".MyApplication"
@@ -85,7 +87,11 @@
         <activity android:name=".activity.RSAActivity" />
         <activity android:name=".activity.AESActivity" />
         <activity android:name=".activity.AppUpdateActivity" />
-        <activity android:name=".mvp.ui.MVPLoginActivity"/>
+        <activity android:name=".mvp.ui.MVPLoginActivity" />
+        <activity android:name=".activity.card.CardSwipeActivity" />
+        <activity android:name=".activity.MetronomeActivity" />
+        <activity android:name=".activity.SwipeCardActivity" />
+        <activity android:name=".activity.ShapeLoadingActivity"></activity>
     </application>
 
 </manifest>

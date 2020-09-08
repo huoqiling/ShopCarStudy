@@ -49,4 +49,10 @@
             <enum name="bottom" value="4" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="LoadingView">
+        <attr name="loadingText" format="string|reference"/>
+        <attr name="loadingTextAppearance" format="reference"/>
+        <attr name="delay" format="integer|reference"/>
+    </declare-styleable>
 </resources>

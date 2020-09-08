@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/bg_card"
+    android:orientation="vertical">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/iv_card"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/f1" />
+
+        <TextView
+            android:id="@+id/btnLike"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:textSize="14sp"
+            android:background="@color/yellow_ffa810"
+            android:layout_gravity="right"
+            android:layout_margin="20dp"
+            android:textColor="@color/white"
+            android:text="喜欢"
+            android:gravity="center"
+            android:width="60dp"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tv_card"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_margin="10dp"
+        android:text="美丽的风景"
+        android:textColor="#88000000"
+        android:textSize="20sp" />
+
+
+</LinearLayout>
